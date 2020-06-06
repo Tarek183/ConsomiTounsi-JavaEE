@@ -10,7 +10,9 @@ import javax.json.JsonReader;
 import javax.persistence.EntityManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tn.esprit.jsf_app.DTO.Employe;
@@ -70,7 +72,19 @@ public class EmployeService implements EmployeServiceRemote {
 
 	@Override
 	public void Create(Employe e) {
-		// TODO Auto-generated method stub
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://"+GlobalEndPoint+"/api/Create");
+		WebTarget hello =target.path("");
+		
+		Response response =hello.request().post(Entity.entity(e, MediaType.APPLICATION_JSON) );
+		
+		
+		String result=response.readEntity(String.class);
+		System.out.println(result);
+		
+		
+
+		response.close();
 		
 	}
 
