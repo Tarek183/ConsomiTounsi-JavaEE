@@ -62,8 +62,10 @@ public class EmployeService implements EmployeServiceRemote {
 	@Override
 	public void Delete(Employe emp) {
 
-		// TODO Auto-generated method stub
-
+		Client cl = ClientBuilder.newClient();
+		WebTarget target = cl.target("http://"+GlobalEndPoint+"/api/EventWebApi?id="+emp.getEmployeId()); 
+		WebTarget hello = target.path("");     	
+    	Response res=(Response) hello.request().delete();
 	}
 
 	@Override
