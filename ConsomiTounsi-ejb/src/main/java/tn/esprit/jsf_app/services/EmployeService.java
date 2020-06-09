@@ -63,10 +63,9 @@ public class EmployeService implements EmployeServiceRemote {
     	 
     	for (int i=0;i<object.size();i++)
     	{
-    	 
     		Employe e = new Employe();
-    	 //String dateString;
-       	 e.setEmployeId(object.getJsonObject(i).getInt("EmployeId")); 
+    		
+       	 e.setEmployeId(object.getJsonObject(i).getInt("employeId")); 
     	 e.setFirstName(object.getJsonObject(i).getString("FirstName")); 
     	 e.setLastName(object.getJsonObject(i).getString("LastName")); 
     	 e.setEmail(object.getJsonObject(i).getString("email")); 
