@@ -82,7 +82,6 @@ public class EmployeService implements EmployeServiceRemote {
 
 	@Override
 	public void Delete(int employeId) {
-		// TODO Auto-generated method stub
 		try {
             SSLContext sc = SSLContext.getInstance("ssl");
             sc.init(null, noopTrustManager, null);
