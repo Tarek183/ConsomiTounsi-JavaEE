@@ -10,14 +10,12 @@ Website: http://www.webthemez.com/
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
-
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta content="" name="description" />
     <meta content="webthemez" name="author" />
-    <title>BRILLIANT Free Bootstrap Admin Template - WebThemez</title>
+    <title>ConsomiTounsi Free Bootstrap Admin Template - WebThemez</title>
     <!-- Bootstrap Styles-->
     <link rel="stylesheet" href="../ressources/css/bootstrap.css"
 	type="text/css" />
@@ -34,7 +32,6 @@ Website: http://www.webthemez.com/
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css"/>
 </head>
-
 <body>
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -46,15 +43,11 @@ Website: http://www.webthemez.com/
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="index.html"><strong><i class="icon fa fa-star"></i> ConsomiTounsi</strong></a>
-
 		<div id="sideNav" href="">
 		<i class="fa fa-bars icon"></i>
 		</div>
             </div>
-
             <ul class="nav navbar-top-links navbar-right">
-               
-             
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
@@ -88,9 +81,8 @@ Website: http://www.webthemez.com/
                         <a href="/ConsomiTounsi-web/Views/CreateEmployee.jsf"><i class="fa fa-desktop"></i> Add employees</a>
                     </li>
                     <li>
-                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Edit employees</a>
+                        <a href="/ConsomiTounsi-web/Views/EditEmployee.jsf"><i class="fa fa-qrcode"></i> Edit employees</a>
                     </li>
-
                     <li>
                         <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
                     </li>
@@ -101,68 +93,81 @@ Website: http://www.webthemez.com/
             </div>
         </nav>
         <!-- /. NAV SIDE  -->
-
 		<div id="page-wrapper">
 		  <div class="header">
-                        <h1 class="page-header">
-                            Dashboard <small>Welcome</small>
-                        </h1>
-						<ol class="breadcrumb">
+                    <h1 class="page-header">
+                        Dashboard <small>Welcome John Doe</small>
+                    </h1>
+					<ol class="breadcrumb">
 					  <li><a href="#">Home</a></li>
 					  <li><a href="#">Dashboard</a></li>
-					  <li class="active">welcome</li>
+					  <li class="active">Data</li>
 					</ol>
-
 		</div>
             <div id="page-inner">
-
                 <!-- /. ROW  -->
-
                 <div class="row">
                     <div class="col-md-3 col-sm-12 col-xs-12">
-
                     </div>
-
 					       <div class="col-md-3 col-sm-12 col-xs-12">
-
                     </div>
-
 					       <div class="col-md-3 col-sm-12 col-xs-12">
-
                     </div>
-
 					       <div class="col-md-3 col-sm-12 col-xs-12">
-
                     </div>
-
                 </div>
-
-
-
-
-
-
 				<div class="row">
 				<div class="col-md-12">
-
 					</div>
 				</div>
                 <!-- /. ROW  -->
-
-
-
-
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                    <img src="/ConsomiTounsi-web/ressources/img/land.png" style="width: 1170px; height: 500px"/>
 
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Employees List
+                                <button  type="button" class="btn btn-warning btn-sm"><i class="fa fa-plus"></i>
+                            </button>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <h:dataTable  value = "#{employeBean.getAllEmployees()}" var = "employee" styleClass="table table-striped table-bordered table-hover">
+                                       <h:column>
+								     	 <f:facet name = "header">Emplye ID</f:facet>
+								   		   #{employee.employeId}
+   									</h:column>
+                                       <h:column>    				
+     									 <f:facet name = "header">First Name</f:facet>    				
+      						        		#{employee.firstName}
+  									   </h:column>					 
+  						            <h:column>
+      									<f:facet name = "header">Last Name</f:facet>
+      										#{employee.lastName}
+   									</h:column>
+   									<h:column>
+    								    <f:facet name = "header">Phone</f:facet>
+     										 #{employee.phoneNumber}
+   									</h:column>
+   									<h:column>
+      									<f:facet name = "header">Email</f:facet>
+      										 #{employee.email}
+   								    </h:column>
+    								<h:column>
+      									<f:facet name = "header">Actions</f:facet>
+       							          <h:commandButton action="#{employeBean.modifier(employe)}" style=" margin-left: 10px" class="btn btn-success" value="Update"></h:commandButton>
+	                                	  <h:commandButton action="#{employeBean.deleteEmploye(employee.employeId)}" style=" margin-left: 30px" class="btn btn-danger" value="Delete_#employee.employeId"></h:commandButton>
+      										<!--  <button class="btn btn-success"><i class="fa fa-pencil "></i> </button>
+											<button class="btn btn-danger"><i class="fa fa-trash-o"></i> </button> -->
+   									</h:column>    
+                                    </h:dataTable>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /. ROW  -->
-
-
 				<footer><p>All right reserved. Template by: ConsomiTounsi_2020</p>
-
-
 				</footer>
             </div>
             <!-- /. PAGE INNER  -->

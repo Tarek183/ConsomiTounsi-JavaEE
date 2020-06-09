@@ -2,10 +2,16 @@ package tn.esprit.jsf_app.presentation.mbeans;
 
 import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
 import tn.esprit.jsf_app.DTO.Employe;
 import tn.esprit.jsf_app.services.EmployeService;
 
+@ManagedBean(name="employeBean",eager=true)
+@SessionScoped
 public class EmployeBean {
+	
 	public int EmployeId;
 	public String FirstName; 
 	public String LastName; 
@@ -14,8 +20,11 @@ public class EmployeBean {
 	public String phoneNumber;
 	private List<Employe> Employe;
 	private static final long serialVersionUID = 1L;
-
-	EmployeService ES = new EmployeService();
+    
+	EmployeService ES;
+	public EmployeBean() {
+	  ES = new EmployeService();	
+	}
 
 	
 	public int getEmployeId() {
@@ -82,5 +91,23 @@ public class EmployeBean {
 		ES = eS;
 	}
 	
+	public String addEmploye() {
+		ES.Create(new Employe(0,this.FirstName,this.LastName,this.email,"",this.phoneNumber));
+		
+		return "/ConsomiTounsi-web/Views/ListEmployee.jsf";
+	}
+	
+	
+	public List<Employe> getAllEmployees(){	
+		return ES.GetAll();
+	}
+
+	public String deleteEmploye(String employeId) {
+		ES.Delete(Integer.parseInt(employeId));
+		return "ListEmployee.jsf";
+	}
+	 //  public String moveToAddEmploye() {
+    //		      return "CreateEmployee.jsf";
+	//	   }
 	
 }

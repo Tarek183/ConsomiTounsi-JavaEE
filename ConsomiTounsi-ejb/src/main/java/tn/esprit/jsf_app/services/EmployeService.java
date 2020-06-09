@@ -7,6 +7,7 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonReader;
+import javax.net.ssl.*;
 import javax.persistence.EntityManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -20,22 +21,38 @@ import tn.esprit.jsf_app.interfaces.EmployeServiceRemote;
 
 public class EmployeService implements EmployeServiceRemote {
 
-	public String GlobalEndPoint = "empresentation-dev.eu-west-1.elasticbeanstalk.com";
+	public String GlobalEndPoint = "https://localhost:44382/api/";
+	TrustManager[] noopTrustManager = new TrustManager[]{
+            new X509TrustManager() {
 
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                }
+
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] certs, String authType) {
+                }
+            }
+        };
 	public EmployeService() {
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public List<Employe> GetAll() {
-		EntityManager em ;
 		
-		List<Employe>  lasp = new ArrayList<Employe>();
-		Client client = ClientBuilder.newClient();
-    	
-    	WebTarget web = client.target("http://"+GlobalEndPoint+"/api/EventWebApi/"); 
-    	
-    	Response response = web.request().get();
+    	List<Employe> lasp=new ArrayList<Employe>();
+		try {
+			  SSLContext sc = SSLContext.getInstance("ssl");
+	            sc.init(null, noopTrustManager, null);
+		Client client = ClientBuilder.newBuilder().sslContext(sc).build();
+		WebTarget web = client.target(GlobalEndPoint+"Employees/Get"); 
+		Response response = web.request().get();
     	
     	String result = response.readEntity(String.class); 
     	
@@ -52,39 +69,55 @@ public class EmployeService implements EmployeServiceRemote {
        	 e.setEmployeId(object.getJsonObject(i).getInt("EmployeId")); 
     	 e.setFirstName(object.getJsonObject(i).getString("FirstName")); 
     	 e.setLastName(object.getJsonObject(i).getString("LastName")); 
-    	 e.setEmail(object.getJsonObject(i).getString("Email")); 
+    	 e.setEmail(object.getJsonObject(i).getString("email")); 
     	 e.setPhoneNumber(object.getJsonObject(i).getString("phoneNumber"));
-    	 e.setPassword(object.getJsonObject(i).getString("Password"));
-    	
+    	 System.out.println(e.getEmployeId()+" "+e.getEmail()+" "+e.getFirstName()+" "+e.getLastName()+" "+e.getPhoneNumber());
     	 lasp.add(e);
     	}
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
       return lasp;  
 	}
 
 	@Override
-	public void Delete(Employe emp) {
-
-		Client cl = ClientBuilder.newClient();
-		WebTarget target = cl.target("http://"+GlobalEndPoint+"/api/EventWebApi?id="+emp.getEmployeId()); 
-		WebTarget hello = target.path("");     	
-    	Response res=(Response) hello.request().delete();
+	public void Delete(int employeId) {
+		// TODO Auto-generated method stub
+		try {
+            SSLContext sc = SSLContext.getInstance("ssl");
+            sc.init(null, noopTrustManager, null);
+            
+            
+		Client client = ClientBuilder.newBuilder().sslContext(sc).build();
+		String finalUrl=GlobalEndPoint+"Employees/Delete/"+employeId;
+		WebTarget target = client.target(finalUrl);
+		Response response = target
+		               .request().delete();
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
 	}
-
+	
 	@Override
 	public void Create(Employe e) {
-		Client client = ClientBuilder.newClient();
-		WebTarget target = client.target("http://"+GlobalEndPoint+"/api/Create");
-		WebTarget hello =target.path("");
 		
-		Response response =hello.request().post(Entity.entity(e, MediaType.APPLICATION_JSON) );
+		try {
+			  SSLContext sc = SSLContext.getInstance("ssl");
+	            sc.init(null, noopTrustManager, null);
+		Client client = ClientBuilder.newBuilder().sslContext(sc).build();
+		WebTarget web = client.target(GlobalEndPoint+"Employees/Post"); 
+		WebTarget hello =web.path("");
 		
+		Response response =hello.request().post(Entity.entity(e, MediaType.APPLICATION_JSON) );		
 		
 		String result=response.readEntity(String.class);
 		System.out.println(result);
-		
-		
 
 		response.close();
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
 		
 	}
 
