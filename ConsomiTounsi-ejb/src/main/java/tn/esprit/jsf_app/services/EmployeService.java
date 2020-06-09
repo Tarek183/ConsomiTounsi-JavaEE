@@ -118,11 +118,30 @@ public class EmployeService implements EmployeServiceRemote {
 		}
 		
 	}
-
 	@Override
 	public void Update(int id, Employe e) {
-		// TODO Auto-generated method stub
+		Employe emp = new Employe();
+		emp.setFirstName(e.getFirstName());;
+		emp.setLastName(e.getLastName());;
+		emp.setEmail(e.getEmail());;
+		emp.setPhoneNumber(e.getPhoneNumber());
+		 try {
+	            SSLContext sc = SSLContext.getInstance("ssl");
+	            sc.init(null, noopTrustManager, null);
+	                        
+			Client client = ClientBuilder.newBuilder().sslContext(sc).build();
+  	
+		WebTarget target = client.target(GlobalEndPoint+"/Employees/Put/"+id);
+		Response response = target
+		                 .request()
+		                 .put(Entity.entity(e, MediaType.APPLICATION_JSON));
+	
 		
-	}
+	
+		 }catch(Exception ex) {
+			 System.out.println(ex);
+		 }
+     }
 
-}
+
+   }

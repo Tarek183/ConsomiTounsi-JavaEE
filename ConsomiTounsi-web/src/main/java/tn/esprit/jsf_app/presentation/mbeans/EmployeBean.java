@@ -106,6 +106,22 @@ public class EmployeBean {
 		ES.Delete(Integer.parseInt(employeId));
 		return "ListEmployee.jsf";
 	}
+	
+	public String updateEmployee() {
+		
+		String liid=(SessionUtils.getSession().getAttribute("eventIdFocused")+"").trim();
+		Employe e = new Employe();
+		e.setFirstName(FirstName);
+		e.setLastName(LastName);
+		e.setEmail(email);
+		e.setPhoneNumber(phoneNumber);;
+
+	
+		ES.Update(Integer.parseInt(liid), e);
+		
+		return getEmploye();	
+		
+	}
 	 //  public String moveToAddEmploye() {
     //		      return "CreateEmployee.jsf";
 	//	   }
