@@ -12,7 +12,7 @@ import tn.esprit.jsf_app.services.EmployeService;
 @SessionScoped
 public class EmployeBean {
 	
-	public int EmployeId;
+	public String EmployeId;
 	public String FirstName; 
 	public String LastName; 
 	public String email; 
@@ -26,12 +26,11 @@ public class EmployeBean {
 	  ES = new EmployeService();	
 	}
 
-	
-	public int getEmployeId() {
+	public String getEmployeId() {
 		return EmployeId;
 	}
 
-	public void setEmployeId(int employeId) {
+	public void setEmployeId(String employeId) {
 		EmployeId = employeId;
 	}
 
@@ -103,13 +102,13 @@ public class EmployeBean {
 	}
 
 	public String deleteEmploye(String employeId) {
+		
 		ES.Delete(Integer.parseInt(employeId));
 		return "ListEmployee.jsf";
 	}
 	
-	public String updateEmployee() {
+	public String updateEmployee(String employeId) {
 		
-		String liid=(SessionUtils.getSession().getAttribute("eventIdFocused")+"").trim();
 		Employe e = new Employe();
 		e.setFirstName(FirstName);
 		e.setLastName(LastName);
@@ -117,9 +116,9 @@ public class EmployeBean {
 		e.setPhoneNumber(phoneNumber);;
 
 	
-		ES.Update(Integer.parseInt(liid), e);
+		ES.Update(Integer.parseInt(employeId), e);
 		
-		return getEmploye();	
+		return "ListEmployee.jsf";	
 		
 	}
 	 //  public String moveToAddEmploye() {

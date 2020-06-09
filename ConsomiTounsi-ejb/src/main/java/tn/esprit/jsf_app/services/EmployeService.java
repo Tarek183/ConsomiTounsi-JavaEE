@@ -136,8 +136,6 @@ public class EmployeService implements EmployeServiceRemote {
 		                 .request()
 		                 .put(Entity.entity(e, MediaType.APPLICATION_JSON));
 	
-		
-	
 		 }catch(Exception ex) {
 			 System.out.println(ex);
 		 }
