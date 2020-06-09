@@ -104,12 +104,12 @@ public class EmployeBean {
 
 	
 	
-	public goToUpdate(String employeId ) {
+	/*public goToUpdate(String employeId ) {
 		
 		 EmployeeId=employeId;
 		 
 		 return "/EditEmployee.xhtml?faces-redirect=true";
-	}
+	}*/
 	
 	public String deleteEmploye(String employeId) {
 		
