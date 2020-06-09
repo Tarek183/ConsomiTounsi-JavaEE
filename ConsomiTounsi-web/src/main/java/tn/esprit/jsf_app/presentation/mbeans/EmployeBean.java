@@ -11,7 +11,7 @@ import tn.esprit.jsf_app.services.EmployeService;
 @ManagedBean(name="employeBean",eager=true)
 @SessionScoped
 public class EmployeBean {
-	
+	public static String EmployeeId;
 	public String EmployeId;
 	public String FirstName; 
 	public String LastName; 
@@ -70,6 +70,7 @@ public class EmployeBean {
 		return phoneNumber;
 	}
 
+	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
@@ -101,6 +102,15 @@ public class EmployeBean {
 		return ES.GetAll();
 	}
 
+	
+	
+	public goToUpdate(String employeId ) {
+		
+		 EmployeeId=employeId;
+		 
+		 return "/EditEmployee.xhtml?faces-redirect=true";
+	}
+	
 	public String deleteEmploye(String employeId) {
 		
 		ES.Delete(Integer.parseInt(employeId));
